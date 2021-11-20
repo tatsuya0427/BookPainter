@@ -59,8 +59,6 @@ public class GameManagerScript : MonoBehaviour
                 timer -= Time.deltaTime;
                 timerInt = (int)timer;
                 timerText.text = timerInt.ToString();
-
-                addScore();
             }
             else
             {
@@ -74,9 +72,9 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    void addScore()
+    public void addScore(int value)
     {
-        score++;
+        score += value;
         scoreText.text = score.ToString();
     }
 
