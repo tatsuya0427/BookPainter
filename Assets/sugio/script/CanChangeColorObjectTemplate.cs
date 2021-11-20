@@ -43,4 +43,8 @@ public abstract class CanChangeColorObjectTemplate : ColorStorage{//このクラ
     protected internal float GetDamageValue(){
         return this.damageValue;
     }
+
+    void SetDesign(){
+        
+    }
 }
