@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BookCreater : MonoBehaviour
+public class BookCreater : ColorStorage
 {
     [SerializeField] protected GameObject[] bookTemp;
     [SerializeField] protected Sprite[] designs;
@@ -16,11 +16,24 @@ public class BookCreater : MonoBehaviour
     }
 
     public void CreateBook(){
-        Debug.Log(bookTemp.Length);
-        Debug.Log(designs.Length);
-        GameObject book = Instantiate(bookTemp[Random.Range(0, bookTemp.Length)], new Vector3(0, 0, 0.5f), Quaternion.identity);
-        book.transform.Rotate(-246, 0, -90, Space.World);
-        book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)]);
+        int r = Random.Range(0, bookTemp.Length);
+        GameObject book;
+        switch(r){
+            case 0:
+                book = Instantiate(bookTemp[0], new Vector3(1, 0, 0.5f), Quaternion.identity);
+                book.transform.Rotate(-246, 0, -90, Space.World);
+                book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 0, (int)colorType.red);
+                break;
+            case 1:
+                book = Instantiate(bookTemp[1], new Vector3(1, 0, 0.8f), Quaternion.identity);
+                book.transform.Rotate(-246, 0, -90, Space.World);
+                book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 1, (int)colorType.red);
+                break;
+        }
+
+        //GameObject book = Instantiate(bookTemp[], new Vector3(0, 0, 0.5f), Quaternion.identity);
+        
+        
 
     }
 }

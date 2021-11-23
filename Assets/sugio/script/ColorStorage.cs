@@ -9,7 +9,7 @@ public class ColorStorage : MonoBehaviour{
             black,
             red,
             blue,
-            yellow,
+
             green
 
     }
