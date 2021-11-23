@@ -13,21 +13,22 @@ public class GameManagerScript : MonoBehaviour
     private bool beforeGame = true;
     private bool gameover = false;
 
-    private float camRot = 0f;
     private float alpha = 0f;
     private bool resultShown = false;
 
     private GameObject mainCamera;
-    [SerializeField] private GameObject paperImage;
+    private Camera camOfmainCamera;
+    [SerializeField] private GameObject gameObjects;
     [SerializeField] private Text scoreText;
     [SerializeField] private Text timerText;
     [SerializeField] private Text countdownText;
     [SerializeField] private GameObject countdownTextField;
-    [SerializeField] private Text Result_Text_s;
     [SerializeField] private Text ResultScoreText;
     [SerializeField] private GameObject panel;
-    [SerializeField] private GameObject resultPanel;
+    [SerializeField] private GameObject resultObjects;
+    private CanvasGroup resultObjectsCanvas;
     private GameObject fallingBooks;
+    private SkinnedMeshRenderer resultBookShape;
 
     public Texture2D brushCursor;
 
@@ -35,7 +36,10 @@ public class GameManagerScript : MonoBehaviour
     void Start()
     {
         mainCamera = GameObject.Find("Main Camera");
+        camOfmainCamera = mainCamera.GetComponent<Camera>();
         fallingBooks = GameObject.Find("FallingBooks");
+        resultBookShape = GameObject.Find("ResultBook").GetComponent<SkinnedMeshRenderer>();
+        resultObjectsCanvas = resultObjects.GetComponent<CanvasGroup>();
         //カーソルを絵筆に変更
         Cursor.SetCursor(brushCursor, new Vector2(100f, 100f), CursorMode.ForceSoftware);
     }
@@ -93,58 +97,61 @@ public class GameManagerScript : MonoBehaviour
         //カーソルをデフォルトに戻す
         Cursor.SetCursor(null, Vector2.zero, CursorMode.ForceSoftware);
         //不要なものを非表示
-        paperImage.SetActive(false);
-        //演出
-        //カメラが後ろを向く
-        StartCoroutine(CameraRotate());
-        //カメラの移動と時間調整を作成する予定
-        //本が降ってくる
-        for (int i = 0; i < fallingBooks.transform.childCount; i++){
-            fallingBooks.transform.GetChild(i).gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        }
-        //本を開くアニメーション入れてその上にscore表示したい
-        StartCoroutine(PanelOpen());
+        gameObjects.SetActive(false);
+        //結果表示に必要なUIを表示
+        resultObjects.SetActive(true);
         //スコアを表示
         ResultScoreText.text = score.ToString();
-        StartCoroutine(MojiAppear());
-        if(camRot >= 180f && alpha >= 1f)
-        {
-            resultShown = true;
-        }
+        //演出
+        //カメラの移動と本の雨と文字表示
+        StartCoroutine(CameraMove());
+
+        resultShown = true;
     }
 
-    IEnumerator PanelOpen()
+    IEnumerator CameraMove()
     {
-        var size = 0f;
-        var speed = 0.005f;
+        float camRotX = 20f;
+        float camRotY = 0f;
 
-        while (size <= 1.0f)
+        float camPosZ = 0.9f;
+        float weight = 100f;
+
+        //後ろを向く
+        while (camRotY <= 180f)
         {
-            countdownText.text = "Game End";
-            resultPanel.transform.localScale = Vector3.Lerp(new Vector3(0, 1, 1), new Vector3(1, 1, 1), size);
-            size += speed;
+            mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
+            camRotY += 0.5f;
             yield return null;
         }
-        countdownText.text = "";
-    }
-
-    IEnumerator CameraRotate()
-    {
-        while (camRot <= 180f)
+        //本が降ってくる
+        for (int i = 0; i < fallingBooks.transform.childCount; i++)
         {
-            mainCamera.transform.rotation = Quaternion.Euler(20f, camRot, 0f);
-            camRot += 0.05f;
+            fallingBooks.transform.GetChild(i).gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        }
+        //机に近づく
+        while(camPosZ > -2.49f)
+        {
+            camRotX += 0.15f;
+            camPosZ -= 0.01f;
+            mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
+            mainCamera.transform.position = new Vector3(0f, 0f, camPosZ);
             yield return null;
         }
-    }
-
-    IEnumerator MojiAppear()
-    {
-        while (alpha <= 1f)
+        //本が開く, カメラがズームする
+        while(resultBookShape.GetBlendShapeWeight(0) > 0f)
         {
-            Result_Text_s.color = new Color(0, 0, 0, alpha);
-            ResultScoreText.color = new Color(0, 0, 0, alpha);
+            weight--;
+            resultBookShape.SetBlendShapeWeight(0, weight);
+            camOfmainCamera.fieldOfView -= 0.4f;
+            yield return null;
+        }
+        
+        //文字が浮かび上がる
+        while(alpha <= 1f)
+        {
             alpha += 0.01f;
+            resultObjectsCanvas.alpha = alpha;
             yield return null;
         }
     }
