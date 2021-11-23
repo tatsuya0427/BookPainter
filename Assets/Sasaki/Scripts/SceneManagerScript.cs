@@ -19,7 +19,7 @@ public class SceneManagerScript : MonoBehaviour
 
     public void toGameScene()
     {
-        SceneManager.LoadScene("GameManagerScene");
+        SceneManager.LoadScene("GameUIScene");
     }
 
     public void toTitleScene()

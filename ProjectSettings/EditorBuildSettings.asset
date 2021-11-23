@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Sasaki/Scenes/GameManagerScene.unity
     guid: b99e23feea8d2f44fb1f0c5b181e9287
+  - enabled: 1
+    path: Assets/Sasaki/Scenes/GameUIScene.unity
+    guid: ffe57dcc884719c48ab27ff5ad2787eb
   m_configObjects: {}

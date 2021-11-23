@@ -12,23 +12,32 @@ public class GameManagerScript : MonoBehaviour
     private int countdownTimerInt = 3;
     private bool beforeGame = true;
     private bool gameover = false;
+
+    private float camRot = 0f;
     private float alpha = 0f;
     private bool resultShown = false;
 
-    [SerializeField] private GameObject text_s;
-    [SerializeField] private GameObject text_t;
+    private GameObject mainCamera;
+    [SerializeField] private GameObject paperImage;
     [SerializeField] private Text scoreText;
     [SerializeField] private Text timerText;
     [SerializeField] private Text countdownText;
+    [SerializeField] private GameObject countdownTextField;
     [SerializeField] private Text Result_Text_s;
     [SerializeField] private Text ResultScoreText;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject resultPanel;
+    private GameObject fallingBooks;
+
+    public Texture2D brushCursor;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        mainCamera = GameObject.Find("Main Camera");
+        fallingBooks = GameObject.Find("FallingBooks");
+        //カーソルを絵筆に変更
+        Cursor.SetCursor(brushCursor, new Vector2(100f, 100f), CursorMode.ForceSoftware);
     }
 
     // Update is called once per frame
@@ -43,12 +52,13 @@ public class GameManagerScript : MonoBehaviour
             if(countdownTimer <= 0f)
             {
                 countdownText.text = "";
+                countdownTextField.SetActive(false);
                 beforeGame = false;
             }else if(countdownTimer <= 0.99f)
             {
                 countdownText.text = "Start!";
                 //幕開けみたいな演出
-                panel.gameObject.transform.localPosition = Vector3.Lerp(panel.transform.localPosition, new Vector3(-700, 0, 0), Time.deltaTime*2.5f);
+                panel.gameObject.transform.localPosition = Vector3.Lerp(panel.transform.localPosition, new Vector3(-1070, 0, 0), Time.deltaTime*2.5f);
             }
         }
         else
@@ -80,21 +90,27 @@ public class GameManagerScript : MonoBehaviour
 
     void showResult()
     {
-        //演出
-        //本を開くアニメーション入れてその上に表示してもいいかも
-        StartCoroutine(PanelOpen());
+        //カーソルをデフォルトに戻す
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.ForceSoftware);
         //不要なものを非表示
-        text_s.SetActive(false);
-        text_t.SetActive(false);
+        paperImage.SetActive(false);
+        //演出
+        //カメラが後ろを向く
+        StartCoroutine(CameraRotate());
+        //カメラの移動と時間調整を作成する予定
+        //本が降ってくる
+        for (int i = 0; i < fallingBooks.transform.childCount; i++){
+            fallingBooks.transform.GetChild(i).gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        }
+        //本を開くアニメーション入れてその上にscore表示したい
+        StartCoroutine(PanelOpen());
         //スコアを表示
         ResultScoreText.text = score.ToString();
-        while (alpha <= 1)
+        StartCoroutine(MojiAppear());
+        if(camRot >= 180f && alpha >= 1f)
         {
-            Result_Text_s.color = new Color(0, 0, 0, alpha);
-            ResultScoreText.color = new Color(0, 0, 0, alpha);
-            alpha += 0.005f;
+            resultShown = true;
         }
-        resultShown = true;
     }
 
     IEnumerator PanelOpen()
@@ -110,5 +126,26 @@ public class GameManagerScript : MonoBehaviour
             yield return null;
         }
         countdownText.text = "";
+    }
+
+    IEnumerator CameraRotate()
+    {
+        while (camRot <= 180f)
+        {
+            mainCamera.transform.rotation = Quaternion.Euler(20f, camRot, 0f);
+            camRot += 0.05f;
+            yield return null;
+        }
+    }
+
+    IEnumerator MojiAppear()
+    {
+        while (alpha <= 1f)
+        {
+            Result_Text_s.color = new Color(0, 0, 0, alpha);
+            ResultScoreText.color = new Color(0, 0, 0, alpha);
+            alpha += 0.01f;
+            yield return null;
+        }
     }
 }
