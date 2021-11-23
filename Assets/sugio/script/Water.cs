@@ -20,32 +20,32 @@ public class Water : CanChangeColorObjectTemplate{
     }
 
     protected override void SwitchColor(colorType nowColor){
-        Debug.Log("object " + GetObjectColor());
-        switch(GetObjectColor()){
-            case colorType.white:
-                Debug.Log("switch white");
-                gameObject.GetComponent<Renderer>().material.color = Color.white;
-            break;
-            case colorType.black:
-                Debug.Log("switch brack");
-                gameObject.GetComponent<Renderer>().material.color = Color.black;
-            break;
-            case colorType.red:
-                Debug.Log("switch red");
-                gameObject.GetComponent<Renderer>().material.color = Color.red;
-            break;
-            case colorType.blue:
-                Debug.Log("switch blue");
-                gameObject.GetComponent<Renderer>().material.color = Color.blue;
-            break;
-            case colorType.yellow:
-                Debug.Log("switch yellow");
-                gameObject.GetComponent<Renderer>().material.color = Color.yellow;
-            break;
-            case colorType.green:
-                Debug.Log("switch green");
-                gameObject.GetComponent<Renderer>().material.color = Color.green;
-            break;
-        }
+        // Debug.Log("object " + GetObjectColor());
+        // switch(GetObjectColor()){
+        //     case colorType.white:
+        //         Debug.Log("switch white");
+        //         gameObject.GetComponent<Renderer>().material.color = Color.white;
+        //     break;
+        //     case colorType.black:
+        //         Debug.Log("switch brack");
+        //         gameObject.GetComponent<Renderer>().material.color = Color.black;
+        //     break;
+        //     case colorType.red:
+        //         Debug.Log("switch red");
+        //         gameObject.GetComponent<Renderer>().material.color = Color.red;
+        //     break;
+        //     case colorType.blue:
+        //         Debug.Log("switch blue");
+        //         gameObject.GetComponent<Renderer>().material.color = Color.blue;
+        //     break;
+        //     case colorType.yellow:
+        //         Debug.Log("switch yellow");
+        //         gameObject.GetComponent<Renderer>().material.color = Color.yellow;
+        //     break;
+        //     case colorType.green:
+        //         Debug.Log("switch green");
+        //         gameObject.GetComponent<Renderer>().material.color = Color.green;
+        //     break;
+        // }
     }
 }

@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class BookState : CanChangeColorObjectTemplate{
     
     Rigidbody2D rbody;
     Renderer renderer;
-    [SerializeField] protected Material[] _material;
+    [SerializeField] protected GameObject GamaManager;
     [SerializeField] protected internal GameObject bookDesign;//本の柄を描画するためのオブジェクト
-    [SerializeField] protected internal GameObject bookCreater;//次の本を生成するためのオブジェクト
+    protected internal GameObject bookCreater;//次の本を生成するためのオブジェクト
     private SpriteRenderer designRender;
+    private int bookType = 0;
+    private int truePattern;
 
     void Start(){
         rbody = this.GetComponent<Rigidbody2D>();
+        bookCreater = GameObject.Find("BookCreater");
     }
 
     
@@ -21,7 +25,13 @@ public class BookState : CanChangeColorObjectTemplate{
     }
 
     protected override void SwitchColor(colorType nowColor){
-        Debug.Log("object " + GetObjectColor());
+        //Debug.Log("object " + GetObjectColor());
+
+        if((int)nowColor == truePattern){
+            addScore(100);
+        }else{
+            addScore(-100);
+        }
         
         switch(GetObjectColor()){
             case colorType.white:
@@ -47,10 +57,6 @@ public class BookState : CanChangeColorObjectTemplate{
                 SetChangeColorFlag(false);
                 Invoke("MovePainted", 0.3f);
             break;
-            case colorType.yellow:
-                Debug.Log("switch yellow");
-                //design.GetComponent<Renderer>().material.color = Color.yellow;
-            break;
             case colorType.green:
                 Debug.Log("switch green");
                 //design.GetComponent<Renderer>().material = _material[3];
@@ -61,17 +67,56 @@ public class BookState : CanChangeColorObjectTemplate{
         }
     }
 
-    public void SetDesign(Sprite design){
+    public void SetDesign(Sprite design, int bookType, int truePattern){
         designRender = bookDesign.GetComponent<SpriteRenderer>();
         designRender.sprite = design;
+        this.bookType = bookType;
+        this.truePattern = truePattern;
+        MoveCreate();
     }
 
     public void MoveCreate(){
-
+        switch(this.bookType){
+            case 0:
+                transform.DOLocalMove(new Vector3(0, 0, 0.5f), 0.3f);
+            break;
+            case 1:
+                transform.DOLocalMove(new Vector3(0, 0, 0.8f), 0.3f);
+            break;
+        }
+        
     }
 
     public void MovePainted(){
+        switch(this.bookType){
+            case 0:
+                transform.DOLocalMove(new Vector3(-1, 0, 0.5f), 0.3f)
+                    .OnComplete(MoveEnd);
+            break;
+            case 1:
+                transform.DOLocalMove(new Vector3(-1, 0, 0.8f), 0.3f)
+                    .OnComplete(MoveEnd);
+            break;
+        }
         bookCreater.GetComponent<BookCreater>().CreateBook();
-        Destroy(gameObject);
+    }
+
+    private void MoveEnd(){
+        //Debug.Log("moveend");
+        //Destroy(gameObject);
+        transform.parent = GameObject.Find ("BookStrage").transform;
+    }
+
+    private void addScore(int score){
+        if(GamaManager != null){
+            //GameManager.GetComponent<GameManager>().addScore(score);
+        }else{
+            Debug.Log(score);
+        }
     }
 }
+
+
+
+
+//1 ~ -0.07 ~ -1
