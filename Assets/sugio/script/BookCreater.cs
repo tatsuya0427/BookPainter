@@ -17,17 +17,18 @@ public class BookCreater : ColorStorage
 
     public void CreateBook(){
         int r = Random.Range(0, bookTemp.Length);
+        
         GameObject book;
         switch(r){
             case 0:
                 book = Instantiate(bookTemp[0], new Vector3(1, 0, 0.5f), Quaternion.identity);
                 book.transform.Rotate(-246, 0, -90, Space.World);
-                book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 0, (int)colorType.red);
+                //book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 0, Random.Range(1, Enum.GetNames(typeof(a)).Length));
                 break;
             case 1:
                 book = Instantiate(bookTemp[1], new Vector3(1, 0, 0.8f), Quaternion.identity);
                 book.transform.Rotate(-246, 0, -90, Space.World);
-                book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 1, (int)colorType.red);
+                //book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 1, Random.Range(1, Enum.GetNames(typeof(a)).Length));
                 break;
         }
 
