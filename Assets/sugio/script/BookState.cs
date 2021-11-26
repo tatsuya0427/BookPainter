@@ -122,7 +122,7 @@ public class BookState : CanChangeColorObjectTemplate{
         z = Random.Range(-3.0f, 3.0f);
         y = Random.Range(10.0f, 13.0f);
         transform.position = new Vector3(x, y, z);
-        transform.parent = GameObject.Find ("BookStrage").transform;
+        transform.parent = GameObject.Find ("FallingBooks").transform;
     }
 
     private void addScore(int score){

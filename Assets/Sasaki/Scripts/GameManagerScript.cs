@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class GameManagerScript : MonoBehaviour
 {
     public int score;
-    private float timer = 0.999f;
-    private int timerInt = 0;
+    [SerializeField] private float timer = 30.999f;
+    private int timerInt = 30;
     private float countdownTimer = 3.999f;
     private int countdownTimerInt = 3;
     private bool beforeGame = true;
@@ -33,6 +33,9 @@ public class GameManagerScript : MonoBehaviour
 
     public Texture2D brushCursor;
 
+    private static BookCreater _bookCreater = null;
+    private bool firstCreate = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +46,12 @@ public class GameManagerScript : MonoBehaviour
         resultObjectsCanvas = resultObjects.GetComponent<CanvasGroup>();
         //カーソルを絵筆に変更
         Cursor.SetCursor(brushCursor, new Vector2(100f, 100f), CursorMode.ForceSoftware);
+        if(_bookCreater == null){
+            _bookCreater = GameObject.Find("BookCreater").GetComponent<BookCreater>();
+        }
+
+        timerInt = (int)timer;
+        timerText.text = timerInt.ToString();
     }
 
     // Update is called once per frame
@@ -68,6 +77,11 @@ public class GameManagerScript : MonoBehaviour
         }
         else
         {
+
+            if(firstCreate){
+                _bookCreater.CreateBook();
+                firstCreate = false;
+            }
             //時間制限処理
             if(timer >= 0f)
             {
@@ -77,7 +91,7 @@ public class GameManagerScript : MonoBehaviour
 
                 if(timer < 20 && candles[0].activeSelf)
                 {
-                    candles[0].SetActive(false);
+                    candles[0].SetActive(false);    
                 }
                 if (timer < 10 && candles[1].activeSelf)
                 {
@@ -140,7 +154,7 @@ public class GameManagerScript : MonoBehaviour
         while (camRotY <= 180f)
         {
             mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
-            camRotY += 0.5f;
+            camRotY += 3f;
             yield return null;
         }
         //本が降ってくる

@@ -13,10 +13,10 @@ public class BookCreater : ColorStorage
     private int colorNum;
 
     private colorType sendColorType;
-    void Start()
-    {
-        CreateBook();
-    }
+    // void Start()
+    // {
+    //     CreateBook();
+    // }
 
     public void CreateBook(){
         int r = Random.Range(0, bookTemp.Length);
