@@ -18,7 +18,7 @@ public abstract class CanChangeColorObjectTemplate : ColorStorage{//このクラ
             if(this.changeColorFlag){
                 this.objectColor = targetColor;
                 SwitchColor(targetColor);
-                Debug.Log(gameObject.name + "は、" + this.objectColor + "に設定されました");
+                //Debug.Log(gameObject.name + "は、" + this.objectColor + "に設定されました");
             }
     }
 
