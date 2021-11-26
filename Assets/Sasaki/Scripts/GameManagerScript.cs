@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class GameManagerScript : MonoBehaviour
 {
     public int score;
-    private float timer = 3.999f;
-    private int timerInt = 3;
+    private float timer = 30.999f;
+    private int timerInt = 30;
     private float countdownTimer = 3.999f;
     private int countdownTimerInt = 3;
     private bool beforeGame = true;
@@ -26,6 +26,7 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] private Text ResultScoreText;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject resultObjects;
+    [SerializeField] private GameObject[] candles;
     private CanvasGroup resultObjectsCanvas;
     private GameObject fallingBooks;
     private SkinnedMeshRenderer resultBookShape;
@@ -73,10 +74,23 @@ public class GameManagerScript : MonoBehaviour
                 timer -= Time.deltaTime;
                 timerInt = (int)timer;
                 timerText.text = timerInt.ToString();
+
+                if(timer < 20 && candles[0].activeSelf)
+                {
+                    candles[0].SetActive(false);
+                }
+                if (timer < 10 && candles[1].activeSelf)
+                {
+                    candles[1].SetActive(false);
+                }
             }
             else
             {
                 gameover = true;
+                if (candles[2].activeSelf)
+                {
+                    candles[2].SetActive(false);
+                }
             }
         }
 
