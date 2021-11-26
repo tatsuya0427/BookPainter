@@ -9,28 +9,34 @@ public class BookState : CanChangeColorObjectTemplate{
     Renderer renderer;
     [SerializeField] protected GameObject GamaManager;
     [SerializeField] protected internal GameObject bookDesign;//本の柄を描画するためのオブジェクト
-    protected internal GameObject bookCreater;//次の本を生成するためのオブジェクト
+    private static BookCreater _bookCreater = null;//次の本を生成するためのオブジェクト
+    private static BookScoreManager _bookScoreManager = null;
     private SpriteRenderer designRender;
     private int bookType = 0;
     private int truePattern;
 
     void Start(){
         rbody = this.GetComponent<Rigidbody2D>();
-        bookCreater = GameObject.Find("BookCreater");
-    }
-
-    
-    void Update(){
-
+        if(_bookCreater == null){
+            Debug.Log("create");
+            _bookCreater = GameObject.Find("BookCreater").GetComponent<BookCreater>();
+        }
+        if(_bookScoreManager == null){
+            Debug.Log("score");
+            _bookScoreManager = GameObject.Find("BookScoreManager").GetComponent<BookScoreManager>();
+        }
+        SetChangeColorFlag(false);
     }
 
     protected override void SwitchColor(colorType nowColor){
         //Debug.Log("object " + GetObjectColor());
 
         if((int)nowColor == truePattern){
-            addScore(100);
+            _bookScoreManager.AddScore(100, true);
+            //addScore(100);
         }else{
-            addScore(-100);
+            _bookScoreManager.AddScore(100, false);
+            //addScore(-100);
         }
         
         switch(GetObjectColor()){
@@ -42,6 +48,9 @@ public class BookState : CanChangeColorObjectTemplate{
             case colorType.black:
                 Debug.Log("switch brack");
                 //design.GetComponent<Renderer>().material.color = Color.black;
+                designRender.color = Color.black;
+                SetChangeColorFlag(false);
+                Invoke("MovePainted", 0.3f);
             break;
             case colorType.red:
                 Debug.Log("switch red");
@@ -78,32 +87,41 @@ public class BookState : CanChangeColorObjectTemplate{
     public void MoveCreate(){
         switch(this.bookType){
             case 0:
-                transform.DOLocalMove(new Vector3(0, 0, 0.5f), 0.3f);
+                transform.DOLocalMove(new Vector3(0, 0, 0.5f), 0.3f)
+                    .OnComplete(CreateEnd);
             break;
             case 1:
-                transform.DOLocalMove(new Vector3(0, 0, 0.8f), 0.3f);
+                transform.DOLocalMove(new Vector3(0, 0, 0.8f), 0.3f)
+                    .OnComplete(CreateEnd);
             break;
         }
         
+    }
+
+    private void CreateEnd(){
+        SetChangeColorFlag(true);
     }
 
     public void MovePainted(){
         switch(this.bookType){
             case 0:
                 transform.DOLocalMove(new Vector3(-1, 0, 0.5f), 0.3f)
-                    .OnComplete(MoveEnd);
+                    .OnComplete(PaintedEnd);
             break;
             case 1:
                 transform.DOLocalMove(new Vector3(-1, 0, 0.8f), 0.3f)
-                    .OnComplete(MoveEnd);
+                    .OnComplete(PaintedEnd);
             break;
         }
-        bookCreater.GetComponent<BookCreater>().CreateBook();
+        _bookCreater.CreateBook();
     }
 
-    private void MoveEnd(){
-        //Debug.Log("moveend");
-        //Destroy(gameObject);
+    private void PaintedEnd(){
+        float x, y, z;
+        x = Random.Range(-3.0f, 3.0f);
+        z = Random.Range(-3.0f, 3.0f);
+        y = Random.Range(10.0f, 13.0f);
+        transform.position = new Vector3(x, y, z);
         transform.parent = GameObject.Find ("BookStrage").transform;
     }
 

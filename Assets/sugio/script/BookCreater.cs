@@ -1,34 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BookCreater : ColorStorage
 {
     [SerializeField] protected GameObject[] bookTemp;
     [SerializeField] protected Sprite[] designs;
+    
+
+    public Text test;
+    private int colorNum;
+
+    private colorType sendColorType;
     void Start()
     {
         CreateBook();
     }
-    void Update()
-    {
-        
-    }
 
     public void CreateBook(){
         int r = Random.Range(0, bookTemp.Length);
+
+        
         
         GameObject book;
         switch(r){
             case 0:
                 book = Instantiate(bookTemp[0], new Vector3(1, 0, 0.5f), Quaternion.identity);
                 book.transform.Rotate(-246, 0, -90, Space.World);
-                //book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 0, Random.Range(1, Enum.GetNames(typeof(a)).Length));
+                colorNum = Random.Range(1, colorType.GetNames(typeof(colorType)).Length);
+
+                
+
+                book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 0, colorNum);
+                sendColorType = (colorType)colorType.ToObject(typeof(colorType), colorNum);
+
+
+                test.text = sendColorType.ToString();
                 break;
             case 1:
                 book = Instantiate(bookTemp[1], new Vector3(1, 0, 0.8f), Quaternion.identity);
                 book.transform.Rotate(-246, 0, -90, Space.World);
-                //book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 1, Random.Range(1, Enum.GetNames(typeof(a)).Length));
+                colorNum = Random.Range(1, colorType.GetNames(typeof(colorType)).Length);
+                book.GetComponent<BookState>().SetDesign(designs[Random.Range(0, designs.Length)], 0, colorNum);
+                sendColorType = (colorType)colorType.ToObject(typeof(colorType), colorNum);
+                test.text = sendColorType.ToString();
                 break;
         }
 
@@ -37,6 +53,8 @@ public class BookCreater : ColorStorage
         
 
     }
+
+
 }
 
 //book2 r -90 -360 -270
