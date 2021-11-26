@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class GameManagerScript : MonoBehaviour
 {
     public int score;
-    private float timer = 30.999f;
-    private int timerInt = 30;
+    private float timer = 0.999f;
+    private int timerInt = 0;
     private float countdownTimer = 3.999f;
     private int countdownTimerInt = 3;
     private bool beforeGame = true;
@@ -97,6 +97,11 @@ public class GameManagerScript : MonoBehaviour
         if (gameover && !resultShown)
         {
             showResult();
+        }
+
+        if (resultObjects.activeSelf)
+        {
+
         }
     }
 
