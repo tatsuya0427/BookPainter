@@ -13,11 +13,6 @@ public class BookScoreManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
-
     public void AddScore(int value, bool ans){
         int score = _bookComboManager.CheckCombo(value, ans);
         Debug.Log(score);
