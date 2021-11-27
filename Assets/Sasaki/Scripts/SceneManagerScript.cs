@@ -10,11 +10,16 @@ public class SceneManagerScript : MonoBehaviour
     [SerializeField] private Image panelImage;
     private float alpha = 0f;
     private float speed = 0.01f;
+    private GameObject gameManager;
+    private GameManagerScript script;
+    private int score;
+    private string tweetMessage;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        gameManager = GameObject.Find("GameManager");
+        script = gameManager.GetComponent<GameManagerScript>();
     }
 
     // Update is called once per frame
@@ -45,5 +50,12 @@ public class SceneManagerScript : MonoBehaviour
         }
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("GameUIScene");
+    }
+
+    public void toTweet()
+    {
+        score = script.score;
+        tweetMessage = "BookPainterで" + score.ToString() + "点獲得しました!";
+        naichilab.UnityRoomTweet.Tweet("bookpainter", tweetMessage, "unityroom", "bookpainter");
     }
 }
