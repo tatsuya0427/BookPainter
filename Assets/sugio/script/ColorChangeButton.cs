@@ -5,15 +5,15 @@ using UnityEngine;
 public class ColorChangeButton : ColorStorage{
     [SerializeField] protected GameObject clickControl;//ClickControlに、押されたボタンの色(colorType)を送るための変数
     [SerializeField] protected colorType sendColor;//ボタンが押された時に、ClickControlの持つ色(setClickColor)をColorChangeButtonの持つ色(sendColor)に更新するための変数
-
-    [SerializeField] protected internal AudioSource _changeColorSound;
+    [SerializeField] protected internal AudioClip changeColorSound;
+    private AudioSource _audioSource;
 
     void Start(){
-        //_changeColorSound = GetComponent<AudioSource>();
+        _audioSource = GetComponent<AudioSource>();
     }
     public void OnClick() {//ボタンが押された時に、ClikControlが持つ色(setClickColor)をsendColorに設定された値に変更する
         //clickControl.GetComponent<ClickControl>().SetClickControlColor((int)sendColor);
         clickControl.GetComponent<ClickControl>().SetClickControlColor(sendColor);
-        //_changeColorSound.PlayOneShot(_changeColorSound.clip);
+        _audioSource.PlayOneShot(changeColorSound);
     }
 }
