@@ -9,6 +9,10 @@ public class BookState : CanChangeColorObjectTemplate{
     Renderer renderer;
     [SerializeField] protected GameObject GamaManager;
     [SerializeField] protected internal GameObject bookDesign;//本の柄を描画するためのオブジェクト
+
+    [SerializeField] protected internal AudioClip paintedSound;
+    [SerializeField] protected internal AudioClip bookMoveSound;
+    protected AudioSource _audioSource;
     private static BookCreater _bookCreater = null;//次の本を生成するためのオブジェクト
     private static BookScoreManager _bookScoreManager = null;
     private SpriteRenderer designRender;
@@ -26,10 +30,13 @@ public class BookState : CanChangeColorObjectTemplate{
             _bookScoreManager = GameObject.Find("BookScoreManager").GetComponent<BookScoreManager>();
         }
         SetChangeColorFlag(false);
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     protected override void SwitchColor(colorType nowColor){
-        //Debug.Log("object " + GetObjectColor());
+        //Debug.Log("object " + GetObjectColor())
+        _audioSource.PlayOneShot(paintedSound);
 
         if((int)nowColor == truePattern){
             _bookScoreManager.AddScore(100, true);
@@ -86,12 +93,12 @@ public class BookState : CanChangeColorObjectTemplate{
 
     public void MoveCreate(){
         switch(this.bookType){
-            case 0:
-                transform.DOLocalMove(new Vector3(0, 0, 0.5f), 0.3f)
+            case 0: 
+                transform.DOLocalMove(new Vector3(-0.141f, -1.014f, 2.078f), 0.3f)
                     .OnComplete(CreateEnd);
             break;
             case 1:
-                transform.DOLocalMove(new Vector3(0, 0, 0.8f), 0.3f)
+                transform.DOLocalMove(new Vector3(-0.2f, -1.014f, 2.38f), 0.3f)
                     .OnComplete(CreateEnd);
             break;
         }
@@ -103,13 +110,14 @@ public class BookState : CanChangeColorObjectTemplate{
     }
 
     public void MovePainted(){
+        _audioSource.PlayOneShot(bookMoveSound);
         switch(this.bookType){
             case 0:
-                transform.DOLocalMove(new Vector3(-1, 0, 0.5f), 0.3f)
+                transform.DOLocalMove(new Vector3(-3f, -1.014f, 2.078f), 0.3f)
                     .OnComplete(PaintedEnd);
             break;
             case 1:
-                transform.DOLocalMove(new Vector3(-1, 0, 0.8f), 0.3f)
+                transform.DOLocalMove(new Vector3(-3f, -1.014f, 2.38f), 0.3f)
                     .OnComplete(PaintedEnd);
             break;
         }
@@ -118,9 +126,9 @@ public class BookState : CanChangeColorObjectTemplate{
 
     private void PaintedEnd(){
         float x, y, z;
-        x = Random.Range(-3.0f, 3.0f);
-        z = Random.Range(-3.0f, 3.0f);
-        y = Random.Range(10.0f, 13.0f);
+        x = Random.Range(-1.5f, 1.5f);
+        z = Random.Range(-3.9f, -3.3f);
+        y = Random.Range(1.50f, 3.0f);
         transform.position = new Vector3(x, y, z);
         transform.parent = GameObject.Find ("FallingBooks").transform;
     }
