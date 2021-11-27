@@ -10,7 +10,7 @@ public class ClickControl : ColorStorage{
     [SerializeField] protected Texture2D[] cursorImage;
     
     void Start(){
-        Cursor.SetCursor(cursorImage[0], new Vector2(95,95), CursorMode.Auto);
+        Cursor.SetCursor(cursorImage[0], new Vector2(95,95), CursorMode.ForceSoftware);
     }
 
     void Update(){
@@ -36,7 +36,7 @@ public class ClickControl : ColorStorage{
     protected internal void SetClickControlColor(colorType targetColor){//このクラスが継承されているクラスが所持する色(nowColor)を変更するメソッド
             //setClickColor = (colorType)Enum.ToObject(typeof(colorType), targetColor);
             setClickColor = targetColor;
-            Cursor.SetCursor(cursorImage[(int)targetColor], new Vector2(95,95), CursorMode.Auto);
+            Cursor.SetCursor(cursorImage[(int)targetColor], new Vector2(95,95), CursorMode.ForceSoftware);
             Debug.Log(setClickColor　+ "色を装備しました");
     }
 }

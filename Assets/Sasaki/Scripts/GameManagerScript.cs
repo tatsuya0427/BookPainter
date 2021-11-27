@@ -53,7 +53,7 @@ public class GameManagerScript : MonoBehaviour
         gameBGM = this.GetComponent<AudioSource>();
 
         //カーソルを絵筆に変更
-        Cursor.SetCursor(brushCursor, new Vector2(100f, 100f), CursorMode.ForceSoftware);
+        //Cursor.SetCursor(brushCursor, new Vector2(100f, 100f), CursorMode.ForceSoftware);
         if(_bookCreater == null){
             _bookCreater = GameObject.Find("BookCreater").GetComponent<BookCreater>();
         }
