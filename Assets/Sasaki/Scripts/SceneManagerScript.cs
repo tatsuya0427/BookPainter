@@ -58,4 +58,10 @@ public class SceneManagerScript : MonoBehaviour
         tweetMessage = "BookPainterで" + score.ToString() + "点獲得しました!";
         naichilab.UnityRoomTweet.Tweet("bookpainter", tweetMessage, "unityroom", "bookpainter");
     }
+
+    public void Ranking()
+    {
+        score = script.score;
+        naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
+    }
 }
