@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Sasaki/Scenes/TitleScene.unity
     guid: 4e9520f6ccaebf94395b1e9f13a67018
   - enabled: 1
+    path: Assets/Scenes/GamePlayScene.unity
+    guid: 8cee7fdb13ef3439bb042a9378cd5a63
+  - enabled: 0
     path: Assets/Sasaki/Scenes/GameManagerScene.unity
     guid: b99e23feea8d2f44fb1f0c5b181e9287
-  - enabled: 1
+  - enabled: 0
     path: Assets/Sasaki/Scenes/GameUIScene.unity
     guid: ffe57dcc884719c48ab27ff5ad2787eb
+  - enabled: 1
+    path: Assets/naichilab/unity-simple-ranking/Scenes/Ranking.unity
+    guid: 152244f5855414ac4a3874f14efa583c
   m_configObjects: {}

@@ -12,6 +12,8 @@ public class GameManagerScript : MonoBehaviour
     private int countdownTimerInt = 3;
     private bool beforeGame = true;
     private bool gameover = false;
+    private int moveCount = 0;
+    [SerializeField] private int moveCountMax = 60;
 
     private float alpha = 0f;
     private bool resultShown = false;
@@ -30,6 +32,7 @@ public class GameManagerScript : MonoBehaviour
     private CanvasGroup resultObjectsCanvas;
     private GameObject fallingBooks;
     private SkinnedMeshRenderer resultBookShape;
+    private AudioSource gameBGM;
 
     public Texture2D brushCursor;
 
@@ -44,6 +47,8 @@ public class GameManagerScript : MonoBehaviour
         fallingBooks = GameObject.Find("FallingBooks");
         resultBookShape = GameObject.Find("ResultBook").GetComponent<SkinnedMeshRenderer>();
         resultObjectsCanvas = resultObjects.GetComponent<CanvasGroup>();
+        gameBGM = this.GetComponent<AudioSource>();
+
         //カーソルを絵筆に変更
         Cursor.SetCursor(brushCursor, new Vector2(100f, 100f), CursorMode.ForceSoftware);
         if(_bookCreater == null){
@@ -70,6 +75,7 @@ public class GameManagerScript : MonoBehaviour
                 beforeGame = false;
             }else if(countdownTimer <= 0.99f)
             {
+                gameBGM.Play();
                 countdownText.text = "Start!";
                 //幕開けみたいな演出
                 panel.gameObject.transform.localPosition = Vector3.Lerp(panel.transform.localPosition, new Vector3(-1070, 0, 0), Time.deltaTime*2.5f);
@@ -111,6 +117,7 @@ public class GameManagerScript : MonoBehaviour
         if (gameover && !resultShown)
         {
             showResult();
+            gameBGM.volume = 0.2f;
         }
 
         if (resultObjects.activeSelf)
@@ -151,7 +158,7 @@ public class GameManagerScript : MonoBehaviour
         float weight = 100f;
 
         //後ろを向く
-        while (camRotY <= 180f)
+        while (camRotY < 180f)
         {
             mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
             camRotY += 3f;
@@ -163,14 +170,16 @@ public class GameManagerScript : MonoBehaviour
             fallingBooks.transform.GetChild(i).gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }
         //机に近づく
-        while(camPosZ > -2.49f)
+        while(moveCount < moveCountMax)
         {
-            camRotX += 0.15f;
-            camPosZ -= 0.01f;
+            camRotX += (18f / (float)moveCountMax);
+            camPosZ -= (4.7f / (float)moveCountMax);
             mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
             mainCamera.transform.position = new Vector3(0f, 0f, camPosZ);
+            moveCount++;
             yield return null;
         }
+        print(moveCount);
         //本が開く, カメラがズームする
         while(resultBookShape.GetBlendShapeWeight(0) > 0f)
         {
