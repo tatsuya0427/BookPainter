@@ -8,10 +8,12 @@ public class GameManagerScript : MonoBehaviour
     public int score;
     [SerializeField] private float timer = 30.999f;
     private int timerInt = 30;
-    private float countdownTimer = 3.999f;
-    private int countdownTimerInt = 3;
+    private float countdownTimer = 1.999f;
+    private int countdownTimerInt = 1;
     private bool beforeGame = true;
     private bool gameover = false;
+    private int moveCount = 0;
+    [SerializeField] private int moveCountMax = 60;
 
     private float alpha = 0f;
     private bool resultShown = false;
@@ -151,7 +153,7 @@ public class GameManagerScript : MonoBehaviour
         float weight = 100f;
 
         //後ろを向く
-        while (camRotY <= 180f)
+        while (camRotY < 180f)
         {
             mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
             camRotY += 3f;
@@ -163,14 +165,16 @@ public class GameManagerScript : MonoBehaviour
             fallingBooks.transform.GetChild(i).gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }
         //机に近づく
-        while(camPosZ > -2.49f)
+        while(moveCount < moveCountMax)
         {
-            camRotX += 0.15f;
-            camPosZ -= 0.01f;
+            camRotX += (18f / (float)moveCountMax);
+            camPosZ -= (4.7f / (float)moveCountMax);
             mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
             mainCamera.transform.position = new Vector3(0f, 0f, camPosZ);
+            moveCount++;
             yield return null;
         }
+        print(moveCount);
         //本が開く, カメラがズームする
         while(resultBookShape.GetBlendShapeWeight(0) > 0f)
         {
