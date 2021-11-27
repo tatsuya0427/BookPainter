@@ -8,8 +8,8 @@ public class GameManagerScript : MonoBehaviour
     public int score;
     [SerializeField] private float timer = 30.999f;
     private int timerInt = 30;
-    private float countdownTimer = 1.999f;
-    private int countdownTimerInt = 1;
+    private float countdownTimer = 3.999f;
+    private int countdownTimerInt = 3;
     private bool beforeGame = true;
     private bool gameover = false;
     private int moveCount = 0;
@@ -32,6 +32,7 @@ public class GameManagerScript : MonoBehaviour
     private CanvasGroup resultObjectsCanvas;
     private GameObject fallingBooks;
     private SkinnedMeshRenderer resultBookShape;
+    private AudioSource gameBGM;
 
     public Texture2D brushCursor;
 
@@ -46,6 +47,8 @@ public class GameManagerScript : MonoBehaviour
         fallingBooks = GameObject.Find("FallingBooks");
         resultBookShape = GameObject.Find("ResultBook").GetComponent<SkinnedMeshRenderer>();
         resultObjectsCanvas = resultObjects.GetComponent<CanvasGroup>();
+        gameBGM = this.GetComponent<AudioSource>();
+
         //カーソルを絵筆に変更
         Cursor.SetCursor(brushCursor, new Vector2(100f, 100f), CursorMode.ForceSoftware);
         if(_bookCreater == null){
@@ -72,6 +75,7 @@ public class GameManagerScript : MonoBehaviour
                 beforeGame = false;
             }else if(countdownTimer <= 0.99f)
             {
+                gameBGM.Play();
                 countdownText.text = "Start!";
                 //幕開けみたいな演出
                 panel.gameObject.transform.localPosition = Vector3.Lerp(panel.transform.localPosition, new Vector3(-1070, 0, 0), Time.deltaTime*2.5f);
@@ -113,6 +117,7 @@ public class GameManagerScript : MonoBehaviour
         if (gameover && !resultShown)
         {
             showResult();
+            gameBGM.volume = 0.2f;
         }
 
         if (resultObjects.activeSelf)
