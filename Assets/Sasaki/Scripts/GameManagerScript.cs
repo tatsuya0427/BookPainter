@@ -81,7 +81,7 @@ public class GameManagerScript : MonoBehaviour
                 gameBGM.Play();
                 countdownText.text = "Start!";
                 //幕開けみたいな演出
-                panel.gameObject.transform.localPosition = Vector3.Lerp(panel.transform.localPosition, new Vector3(-1070, 0, 0), Time.deltaTime*2.5f);
+                panel.gameObject.transform.localPosition = Vector3.Lerp(panel.transform.localPosition, new Vector3(-1270, 0, 0), Time.deltaTime*2.5f);
             }
         }
         else
@@ -180,8 +180,8 @@ public class GameManagerScript : MonoBehaviour
         while (camRotY < 180f)
         {
             mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
-            camRotY += 3f;
-            camRotX -= 0.53f;
+            camRotY += 2f;
+            camRotX -= 0.35f;
             yield return null;
         }
         //本が降ってくる
