@@ -39,41 +39,41 @@ public class BookState : CanChangeColorObjectTemplate{
         _audioSource.PlayOneShot(paintedSound);
 
         if((int)nowColor == truePattern){
-            _bookScoreManager.AddScore(100, true);
+            _bookScoreManager.AddScore(10, true);
             //addScore(100);
         }else{
-            _bookScoreManager.AddScore(100, false);
+            _bookScoreManager.AddScore(-10, false);
             //addScore(-100);
         }
         
         switch(GetObjectColor()){
-            case colorType.white:
+            case colorType.White:
                 Debug.Log("switch white");
                 //design.GetComponent<Renderer>().material.color = Color.white;
                 //design.GetComponent<Renderer>().material = _material[0];
             break;
-            case colorType.black:
+            case colorType.Black:
                 Debug.Log("switch brack");
                 //design.GetComponent<Renderer>().material.color = Color.black;
                 designRender.color = Color.black;
                 SetChangeColorFlag(false);
                 Invoke("MovePainted", 0.3f);
             break;
-            case colorType.red:
+            case colorType.Red:
                 Debug.Log("switch red");
                 //design.GetComponent<Renderer>().material = _material[1];
                 designRender.color = Color.red;
                 SetChangeColorFlag(false);
                 Invoke("MovePainted", 0.3f);
             break;
-            case colorType.blue:
+            case colorType.Blue:
                 Debug.Log("switch blue");
                 //design.GetComponent<Renderer>().material = _material[2];
                 designRender.color = Color.blue;
                 SetChangeColorFlag(false);
                 Invoke("MovePainted", 0.3f);
             break;
-            case colorType.green:
+            case colorType.Green:
                 Debug.Log("switch green");
                 //design.GetComponent<Renderer>().material = _material[3];
                 designRender.color = Color.green;
@@ -130,6 +130,7 @@ public class BookState : CanChangeColorObjectTemplate{
         z = Random.Range(-3.9f, -3.3f);
         y = Random.Range(1.50f, 3.0f);
         transform.position = new Vector3(x, y, z);
+        transform.localScale = new Vector3(1,1,1);
         transform.parent = GameObject.Find ("FallingBooks").transform;
     }
 

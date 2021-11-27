@@ -14,6 +14,8 @@ public class GameManagerScript : MonoBehaviour
     private bool gameover = false;
     private int moveCount = 0;
     [SerializeField] private int moveCountMax = 60;
+    [SerializeField] private int resultBookOpenSpeed = 1;//スコアが表示される本の開く速度を格納する変数
+
 
     private float alpha = 0f;
     private bool resultShown = false;
@@ -26,6 +28,7 @@ public class GameManagerScript : MonoBehaviour
     [SerializeField] private Text countdownText;
     [SerializeField] private GameObject countdownTextField;
     [SerializeField] private Text ResultScoreText;
+    [SerializeField] private Text ResultGradeText;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject resultObjects;
     [SerializeField] private GameObject[] candles;
@@ -142,6 +145,22 @@ public class GameManagerScript : MonoBehaviour
         resultObjects.SetActive(true);
         //スコアを表示
         ResultScoreText.text = score.ToString();
+
+        //グレードを表示
+        if(score > 1000)
+        {
+            ResultGradeText.text = "A";
+        }else if (score > 600)
+        {
+            ResultGradeText.text = "B";
+        }else if (score > 300)
+        {
+            ResultGradeText.text = "C";
+        }else if(score <= 300)
+        {
+            ResultGradeText.text = "D";
+        }
+
         //演出
         //カメラの移動と本の雨と文字表示
         StartCoroutine(CameraMove());
@@ -151,7 +170,7 @@ public class GameManagerScript : MonoBehaviour
 
     IEnumerator CameraMove()
     {
-        float camRotX = 20f;
+        float camRotX = 52f;
         float camRotY = 0f;
 
         float camPosZ = 0.9f;
@@ -162,6 +181,7 @@ public class GameManagerScript : MonoBehaviour
         {
             mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
             camRotY += 3f;
+            camRotX -= 0.53f;
             yield return null;
         }
         //本が降ってくる
@@ -172,7 +192,7 @@ public class GameManagerScript : MonoBehaviour
         //机に近づく
         while(moveCount < moveCountMax)
         {
-            camRotX += (18f / (float)moveCountMax);
+            camRotX += (45.3f / (float)moveCountMax);
             camPosZ -= (4.7f / (float)moveCountMax);
             mainCamera.transform.rotation = Quaternion.Euler(camRotX, camRotY, 0f);
             mainCamera.transform.position = new Vector3(0f, 0f, camPosZ);
@@ -183,9 +203,9 @@ public class GameManagerScript : MonoBehaviour
         //本が開く, カメラがズームする
         while(resultBookShape.GetBlendShapeWeight(0) > 0f)
         {
-            weight--;
+            weight -= resultBookOpenSpeed;
             resultBookShape.SetBlendShapeWeight(0, weight);
-            camOfmainCamera.fieldOfView -= 0.4f;
+            camOfmainCamera.fieldOfView -= 0.4f　* resultBookOpenSpeed;
             yield return null;
         }
         
