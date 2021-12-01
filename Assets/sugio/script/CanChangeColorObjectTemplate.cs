@@ -7,8 +7,7 @@ public abstract class CanChangeColorObjectTemplate : ColorStorage{//このクラ
 
     [SerializeField] protected internal colorType objectColor;//CanChangeColorObjectTemplateを継承したスクリプトを持つオブジェクトの色を格納する
     [SerializeField] protected internal bool changeColorFlag = true;//CanChangeColorObjectTemplateを継承したスクリプトを持つオブジェクトが現在色を変えることのできるオブジェクトかどうか
-    [SerializeField] protected internal bool damageFlag = false;//CanChangeColorObjectTemplateを継承したスクリプトを持つオブジェクトがダメージ判定を持つかどうかの判定
-    [SerializeField] protected internal float damageValue = 0f;//
+
 
 
     abstract protected void SwitchColor(colorType nowColor);//colorStrageにて、setColorが行われた時に実行されるメソッド
@@ -31,17 +30,6 @@ public abstract class CanChangeColorObjectTemplate : ColorStorage{//このクラ
     }
     protected internal bool GetChangeColorFlag(){//このオブジェクトが現在色を変えることができる状態かどうかを取得するメソッド
         return this.changeColorFlag;
-    }
-
-    protected internal void SetDamageFlag(bool setDamageFlag){//このオブジェクトに触れるとダメージを受けるかどうか切り替えるメソッド
-        this.damageFlag = setDamageFlag;
-    }
-    protected internal bool GetDamageFlag(){//このオブジェクトに触れるとダメージを受けるかどうかを取得するメソッド
-        return this.damageFlag;
-    }
-
-    protected internal float GetDamageValue(){
-        return this.damageValue;
     }
 
     void SetDesign(){

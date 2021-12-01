@@ -7,7 +7,8 @@ public class BookState : CanChangeColorObjectTemplate{
     
     Rigidbody2D rbody;
     Renderer renderer;
-    [SerializeField] protected GameObject GamaManager;
+
+    [SerializeField] protected internal int standardAddPoint;//正解時、不正解時に追加、減少させる基本のスコア
     [SerializeField] protected internal GameObject bookDesign;//本の柄を描画するためのオブジェクト
 
     [SerializeField] protected internal AudioClip paintedSound;
@@ -39,10 +40,10 @@ public class BookState : CanChangeColorObjectTemplate{
         _audioSource.PlayOneShot(paintedSound);
 
         if((int)nowColor == truePattern){
-            _bookScoreManager.AddScore(10, true);
+            _bookScoreManager.AddScore(standardAddPoint, true);
             //addScore(100);
         }else{
-            _bookScoreManager.AddScore(-10, false);
+            _bookScoreManager.AddScore(standardAddPoint, false);
             //addScore(-100);
         }
         
@@ -132,14 +133,6 @@ public class BookState : CanChangeColorObjectTemplate{
         transform.position = new Vector3(x, y, z);
         transform.localScale = new Vector3(1,1,1);
         transform.parent = GameObject.Find ("FallingBooks").transform;
-    }
-
-    private void addScore(int score){
-        if(GamaManager != null){
-            //GameManager.GetComponent<GameManager>().addScore(score);
-        }else{
-            Debug.Log(score);
-        }
     }
 }
 
