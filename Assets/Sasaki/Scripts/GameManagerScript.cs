@@ -131,7 +131,9 @@ public class GameManagerScript : MonoBehaviour
 
     public void addScore(int value)
     {
-        score += value;
+        if(value > 0 || score > 0){
+            score += value;
+        }
         scoreText.text = score.ToString();
     }
 

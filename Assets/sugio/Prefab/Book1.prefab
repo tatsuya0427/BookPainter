@@ -255,9 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectColor: 0
   changeColorFlag: 1
-  damageFlag: 0
-  damageValue: 0
-  GamaManager: {fileID: 0}
+  standardAddPoint: 10
   bookDesign: {fileID: 176088888480865990}
   paintedSound: {fileID: 8300000, guid: 4556025679d6e491ea136ec2d81af775, type: 3}
   bookMoveSound: {fileID: 8300000, guid: 52d49bed6835845d287ee48134df5621, type: 3}
