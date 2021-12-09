@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -987,9 +987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectColor: 0
   changeColorFlag: 1
-  damageFlag: 0
-  damageValue: 0
-  GamaManager: {fileID: 0}
+  standardAddPoint: 0
   bookDesign: {fileID: 440560732}
   paintedSound: {fileID: 0}
   bookMoveSound: {fileID: 0}
@@ -5347,7 +5345,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e96cb37fab85fa840b95cbcf0fe39b78, type: 3}
   - {fileID: 21300000, guid: 1c95f678efe2a3c4787ae1fefb9e1f3b, type: 3}
   - {fileID: 21300000, guid: 10d5ef5a26552c649a8ad528210f198e, type: 3}
-  test: {fileID: 1874963190}
+  bookComboManager: {fileID: 1333867602}
+  nextColorText: {fileID: 1874963188}
 --- !u!4 &1497294413
 Transform:
   m_ObjectHideFlags: 0
@@ -7391,9 +7390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectColor: 0
   changeColorFlag: 1
-  damageFlag: 0
-  damageValue: 0
-  GamaManager: {fileID: 0}
+  standardAddPoint: 0
   bookDesign: {fileID: 1823655686}
   paintedSound: {fileID: 0}
   bookMoveSound: {fileID: 0}
@@ -7660,7 +7657,7 @@ MonoBehaviour:
     m_FontSize: 48
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 0
     m_MaxSize: 74
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -7668,7 +7665,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Red
+  m_Text: 
 --- !u!222 &1874963191
 CanvasRenderer:
   m_ObjectHideFlags: 0

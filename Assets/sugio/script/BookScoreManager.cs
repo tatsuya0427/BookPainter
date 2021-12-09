@@ -21,7 +21,6 @@ public class BookScoreManager : MonoBehaviour
 
     public void AddScore(int value, bool ans){
         int score = _bookComboManager.CheckCombo(value, ans);
-        Debug.Log(score);
         _gameManagerScript.addScore(score);
     }
 }
