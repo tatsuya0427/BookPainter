@@ -75,4 +75,8 @@ public class BookComboManager : MonoBehaviour
         comboText.text = comboCount.ToString();
         nowCombo = false;
     }
+
+    public int GetComboCount(){
+        return this.comboCount;
+    }
 }

@@ -19,6 +19,7 @@ public class BookState : CanChangeColorObjectTemplate{
     private SpriteRenderer designRender;
     private int bookType = 0;
     private int truePattern;
+    private bool setReverse = false;
 
     void Start(){
         rbody = this.GetComponent<Rigidbody2D>();
@@ -39,63 +40,62 @@ public class BookState : CanChangeColorObjectTemplate{
         //Debug.Log("object " + GetObjectColor())
         _audioSource.PlayOneShot(paintedSound);
 
-        if((int)nowColor == truePattern){
-            _bookScoreManager.AddScore(standardAddPoint, true);
-            //addScore(100);
+        if(this.setReverse){
+            if((int)nowColor != truePattern){
+                _bookScoreManager.AddScore(standardAddPoint, true);
+            }else{
+                _bookScoreManager.AddScore(standardAddPoint, false);
+            }
         }else{
-            _bookScoreManager.AddScore(standardAddPoint, false);
-            //addScore(-100);
+            if((int)nowColor == truePattern){
+                _bookScoreManager.AddScore(standardAddPoint, true);
+            }else{
+                _bookScoreManager.AddScore(standardAddPoint, false);
+            }
         }
+        
         
         switch(GetObjectColor()){
             case colorType.White:
                 Debug.Log("switch white");
-                //design.GetComponent<Renderer>().material.color = Color.white;
-                //design.GetComponent<Renderer>().material = _material[0];
             break;
             case colorType.Black:
-                Debug.Log("switch brack");
-                //design.GetComponent<Renderer>().material.color = Color.black;
+                // Debug.Log("switch brack");
                 designRender.color = Color.black;
-                SetChangeColorFlag(false);
-                Invoke("MovePainted", 0.3f);
             break;
             case colorType.Red:
-                Debug.Log("switch red");
-                //design.GetComponent<Renderer>().material = _material[1];
+                // Debug.Log("switch red");
                 designRender.color = Color.red;
-                SetChangeColorFlag(false);
-                Invoke("MovePainted", 0.3f);
             break;
             case colorType.Blue:
-                Debug.Log("switch blue");
-                //design.GetComponent<Renderer>().material = _material[2];
+                // Debug.Log("switch blue");
                 designRender.color = Color.blue;
-                SetChangeColorFlag(false);
-                Invoke("MovePainted", 0.3f);
             break;
             case colorType.Green:
-                Debug.Log("switch green");
-                //design.GetComponent<Renderer>().material = _material[3];
+                // Debug.Log("switch green");
                 designRender.color = Color.green;
-                SetChangeColorFlag(false);
-                Invoke("MovePainted", 0.3f);
             break;
+        }
+
+        if(GetObjectColor() != colorType.White){
+            SetChangeColorFlag(false);
+            Invoke("MovePainted", 0.3f);
         }
     }
 
-    public void SetDesign(Sprite design, int bookType, int truePattern){
+    public void SetDesign(Sprite design, int bookType, int truePattern, bool reverse){
         designRender = bookDesign.GetComponent<SpriteRenderer>();
         designRender.sprite = design;
         this.bookType = bookType;
         this.truePattern = truePattern;
+        this.setReverse = reverse;
         MoveCreate();
     }
 
     public void MoveCreate(){
         switch(this.bookType){
             case 0: 
-                transform.DOLocalMove(new Vector3(-0.141f, -1.014f, 2.078f), 0.3f)
+                transform.DOLocalMove(new Vector3(-0.141f, -1.014f, 2.155f), 0.3f)
                     .OnComplete(CreateEnd);
             break;
             case 1:
