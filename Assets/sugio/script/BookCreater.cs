@@ -7,7 +7,6 @@ public class BookCreater : ColorStorage
 {
     [SerializeField] protected GameObject[] bookTemp;
     [SerializeField] protected Sprite[] designs;
-
     [SerializeField] protected GameObject bookComboManager;
     [SerializeField] protected GameObject nextColorText;
     private BookComboManager bcmComp = null;
@@ -42,8 +41,8 @@ public class BookCreater : ColorStorage
 
         colorNum = Random.Range(1, colorType.GetNames(typeof(colorType)).Length);
         displayString = null;
-        int reverse = 0;
-        int before = 0;
+        int reverse = 1;
+        int before = 1;
 
         if(bcmComp.GetComboCount() > 8){
             reverse = Random.Range(0, 2);
@@ -60,6 +59,7 @@ public class BookCreater : ColorStorage
         if(before > 0){
             colorNum = beforeColorNom;
             displayString += "before";
+            
         }else{
             sendColorType = (colorType)colorType.ToObject(typeof(colorType), colorNum);
             displayString += sendColorType.ToString();

@@ -61,7 +61,7 @@ public class SceneManagerScript : MonoBehaviour
         script = gameManager.GetComponent<GameManagerScript>();
         score = script.score;
         tweetMessage = "BookPainterで" + score.ToString() + "点獲得しました!";
-        naichilab.UnityRoomTweet.Tweet("bookpainter", tweetMessage, "unityroom", "bookpainter");
+        //naichilab.UnityRoomTweet.Tweet("bookpainter", tweetMessage, "unityroom", "bookpainter");
     }
 
     public void Ranking()
@@ -69,6 +69,6 @@ public class SceneManagerScript : MonoBehaviour
         gameManager = GameObject.Find("GameManager");
         script = gameManager.GetComponent<GameManagerScript>();
         score = script.score;
-        naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
+        //naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
     }
 }
