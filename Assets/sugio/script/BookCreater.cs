@@ -17,6 +17,8 @@ public class BookCreater : ColorStorage
     private int beforeColorNom = 0;//以前生成した本の正解色を保管しておく変数
     private GameObject book;//生成する本のオブジェクトを格納しておく
     private bool reverseColor = false;//trueの時は、指定の色以外が正解になる
+    private bool lastBookReverse = false;//前の本の指定がnotだった時はtrue
+    private bool lastBookBefore = false;//前の本の指定がbeforeだった時はtrue
     private Text displayColor;
     private string displayString = null;
 
@@ -47,23 +49,33 @@ public class BookCreater : ColorStorage
 
         if(bcmComp.GetComboCount() > 8){
             reverse = Random.Range(0, 2);
-            before = Random.Range(0, 2);
+
+            if(!this.lastBookReverse && !this.lastBookBefore){//前の本の指定がnotもしくはbeforeじゃない時はbeforeを出題できる
+                before = Random.Range(0, 2);
+            }else{
+                before = 0;
+            }
+            
         }
 
         if(reverse > 0){
             this.reverseColor = true;
+            this.lastBookReverse = true;
             displayString += "not ";
         }else{
             this.reverseColor = false;
+            this.lastBookReverse = false;
         }
 
         if(before > 0){
             colorNum = beforeColorNom;
+            this.lastBookBefore = true;
             displayString += "before";
         }else{
             sendColorType = (colorType)colorType.ToObject(typeof(colorType), colorNum);
             displayString += sendColorType.ToString();
             this.beforeColorNom = colorNum;
+            this.lastBookBefore = false;
         }
 
 
