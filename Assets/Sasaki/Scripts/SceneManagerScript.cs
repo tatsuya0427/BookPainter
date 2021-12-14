@@ -71,4 +71,9 @@ public class SceneManagerScript : MonoBehaviour
         score = script.score;
         naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
     }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
