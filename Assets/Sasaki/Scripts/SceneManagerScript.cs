@@ -38,6 +38,7 @@ public class SceneManagerScript : MonoBehaviour
     public void toTitleScene()
     {
         SceneManager.LoadScene("TitleScene");
+        Debug.Log("タイトルへ移動します");
     }
 
     IEnumerator SceneMove()
@@ -70,5 +71,11 @@ public class SceneManagerScript : MonoBehaviour
         script = gameManager.GetComponent<GameManagerScript>();
         score = script.score;
         naichilab.RankingLoader.Instance.SendScoreAndShowRanking(score);
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("ゲームシーンを再読み込みします");
     }
 }
