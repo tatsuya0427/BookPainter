@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7032427856480131877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7032427856480131875}
+  - component: {fileID: 7032427856480131874}
+  m_Layer: 0
+  m_Name: BookCreater
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7032427856480131875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7032427856480131877}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.037117, y: -0.41104686, z: 2.4980993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7032427856480131874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7032427856480131877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 792b2afa4367b442da3ee55cd29557e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bookTemp:
+  - {fileID: 8219056117276124489, guid: 50326ffb4ce0747d8b5818b5e29aaf39, type: 3}
+  - {fileID: 4693388964123062868, guid: 4ec2306cbde4044628806a9d9155ba6a, type: 3}
+  designs:
+  - {fileID: 21300000, guid: f7a28a3c5caf5ec4db4b1593591bd7de, type: 3}
+  - {fileID: 21300000, guid: e960dda662b182041893d7a76e16680a, type: 3}
+  - {fileID: 21300000, guid: a6665a8b15b574e47acf874886fb7c9a, type: 3}
+  - {fileID: 21300000, guid: 0a664651a157d4143bbe0a63e88d2d65, type: 3}
+  - {fileID: 21300000, guid: 11d0cc19fb4901a4888acf5935cb2df9, type: 3}
+  - {fileID: 21300000, guid: 4977a5ff2efc9f346ace6ce2e3d1d5d2, type: 3}
+  - {fileID: 21300000, guid: e96cb37fab85fa840b95cbcf0fe39b78, type: 3}
+  - {fileID: 21300000, guid: 1c95f678efe2a3c4787ae1fefb9e1f3b, type: 3}
+  - {fileID: 21300000, guid: 10d5ef5a26552c649a8ad528210f198e, type: 3}
+  bookComboManager: {fileID: 0}
+  nextColorText: {fileID: 0}
