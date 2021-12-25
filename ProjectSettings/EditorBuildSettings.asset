@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Sasaki/Scenes/GameUIScene.unity
     guid: ffe57dcc884719c48ab27ff5ad2787eb
-  - enabled: 1
+  - enabled: 0
     path: Assets/naichilab/unity-simple-ranking/Scenes/Ranking.unity
     guid: 152244f5855414ac4a3874f14efa583c
   m_configObjects: {}

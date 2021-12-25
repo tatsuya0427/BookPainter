@@ -35,6 +35,10 @@ public class SceneManagerScript : MonoBehaviour
         StartCoroutine(SceneMove());
     }
 
+    public void toExit(){
+        Application.Quit();
+    }
+
     public void toTitleScene()
     {
         SceneManager.LoadScene("TitleScene");

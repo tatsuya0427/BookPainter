@@ -127,6 +127,10 @@ public class GameManagerScript : MonoBehaviour
         {
 
         }
+
+        if (Input.GetKey(KeyCode.Escape)) {
+            Application.Quit();
+        }
     }
 
     public void addScore(int value)

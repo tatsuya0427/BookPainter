@@ -20,5 +20,9 @@ public class TitleManagerScript : MonoBehaviour
     {
         alpha += speed * Time.deltaTime;
         startButtonImage.color = new Color(1f, 1f, 1f, 0.6f*Mathf.Abs(Mathf.Sin(alpha)));
+
+        if (Input.GetKey(KeyCode.Escape)) {
+            Application.Quit();
+        }
     }
 }
